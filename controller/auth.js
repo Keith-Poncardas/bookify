@@ -1,9 +1,10 @@
 const logger = require("../console/logger");
 const { credAuth } = require("../utils/credValidator");
+const { getNavbarConfig } = require("../utils/navbarConfig");
 const { generateToken } = require("../utils/tokenGenerator");
 
 const getLogin = (req, res) => {
-  res.render('auth/login');
+  res.render('auth/login', { ...getNavbarConfig('login') });
 };
 
 const login = (req, res) => {

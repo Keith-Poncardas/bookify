@@ -1,0 +1,23 @@
+<% layout('layout/main') %>
+
+<div class="table-responsive">
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Book ID</th>
+        <th scope="col">Title</th>
+        <th scope="col">Genre</th>
+        <th scope="col">Author</th>
+        <th scope="col">Navigation</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <% books.forEach((book, index) => { %>
+      <%- include('tableRow', { book, index }) %>
+      <% }) %>
+
+    </tbody>
+  </table>
+</div>

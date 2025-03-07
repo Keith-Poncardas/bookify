@@ -1,0 +1,10 @@
+<% layout('layout/main') %>
+
+<tr>
+  <th scope="row"><%= index + 1 %></th>
+  <td scope="row" class="text-truncate" style="max-width: 6rem; cursor: default;" title="<%= book._id %>"><%= book._id %></td>
+  <td class="text-truncate" style="max-width: 8rem; cursor: default;" title="<%= book.title %>"><%= book.title %></td>
+  <td class="text-truncate" style="max-width: 8rem;"><%= book.genre %></td>
+  <td class="text-truncate" style="max-width: 8rem;"><%= book.author %></td>
+  <td><button class="btn btn-secondary btn-sm me-1"><i class="fa-solid fa-pen-to-square me-1"></i>Edit</button><button class="btn btn-danger btn-sm"><i class="fa-solid fa-trash me-1"></i> Delete</button></td>
+</tr>

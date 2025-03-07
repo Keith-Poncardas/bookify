@@ -1,6 +1,7 @@
 const logger = require("../console/logger");
 const { BookGenres, SortOptions } = require('../utils/options');
 const { getBooks, viewBook } = require("../service/bookService");
+const { getNavbarConfig } = require('../utils/navbarConfig');
 
 /**
  * Asynchronously retrieves books based on the request query and renders the home page.
@@ -14,7 +15,8 @@ const { getBooks, viewBook } = require("../service/bookService");
 const retrieveBooks = async (req, res) => {
   try {
     const books = await getBooks({ query: req.query });
-    res.render('public/home', { ...books, BookGenres, SortOptions });
+
+    res.render('public/home', { ...books, BookGenres, SortOptions, ...getNavbarConfig('home') });
   } catch (err) {
     logger.error(`Error retrieving books: ${err.message}`);
   }
@@ -38,7 +40,7 @@ const retrieveBook = async (req, res) => {
   try {
     const book = await viewBook({ bookId: id });
     const books = await getBooks({ query: req.query });
-    res.render('public/view', { book, ...books });
+    res.render('public/view', { book, ...books, ...getNavbarConfig('view') });
   } catch (err) {
     logger.error(`Error retrieving this book: ${err.message}`);
   }

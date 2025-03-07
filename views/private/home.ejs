@@ -1,4 +1,14 @@
 <% layout('layout/main') %>
 
+<div class="row gap-2 my-3 mx-1">
+
+  <%- include('../partials/sidebar') %>
+  <%- include('../partials/mainContent', { books, BookGenres }) %>
+
+</div>
+
+
+<!-- 
 <h1>Hello Manigas this is private route!</h1>
 <button onclick="window.location = '/dashboard/logout'" class="btn btn-danger">Clear Cookie!</button>
+-->

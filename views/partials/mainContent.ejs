@@ -1,0 +1,10 @@
+<% layout('layout/main') %>
+
+<div class="col bg-body-tertiary rounded-3 shadow-sm">
+
+  <%- include('toolbar', { title: 'Books', isDropdownHidden: true, BookGenres: [], SortOptions: [] }) %>
+  <%- include('dashboardToolbar', { BookGenres }) %>
+  <%- include('dataTable', { books }) %>
+  <%- include('BottomPagination', { currentPage, totalPages, path: 'dashboard' }) %>
+
+</div>

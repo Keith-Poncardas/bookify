@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between my-4 align-items-center">
 
-  <a href="/book?page=<%= currentPage - 1 %>'" class="btn btn-outline-secondary btn-sm rounded-3 <%= currentPage > 1 ? '' : 'disabled' %>"><i class="fa-solid fa-arrow-left mx-1"></i> Previous</a>
+  <a href="/<%= path %>?page=<%= currentPage - 1 %>'" class="btn btn-outline-secondary btn-sm rounded-3 <%= currentPage > 1 ? '' : 'disabled' %>"><i class="fa-solid fa-arrow-left mx-1"></i> Previous</a>
   <span class="text-muted"><small>Page <strong><%= currentPage %></strong> of <strong><%= totalPages %></strong></small></span>
-  <a href="/book?page=<%= currentPage + 1 %>" class="btn btn-outline-secondary btn-sm rounded-3 mx-2 <%= currentPage < totalPages ? '' : 'disabled' %>">Next <i class="fa-solid fa-arrow-right mx-1"></i></a>
+  <a href="/<%= path %>?page=<%= currentPage + 1 %>" class="btn btn-outline-secondary btn-sm rounded-3 mx-2 <%= currentPage < totalPages ? '' : 'disabled' %>">Next <i class="fa-solid fa-arrow-right mx-1"></i></a>
 
 </div>
