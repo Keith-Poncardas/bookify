@@ -1,0 +1,17 @@
+<% if (books.length > 0) { %>
+
+<div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-2">
+
+  <% books.forEach(book => { %>
+  <% if (!currentBookId || book._id.toString() !== currentBookId.toString()) { %>
+  <%- include('card', { book }) %>
+  <% } %>
+  <% }) %>
+
+</div>
+
+<% } else  { %>
+
+<%- include('alertBox', { message: 'No books found.', type: 'dark' }) %>
+
+<% } %>

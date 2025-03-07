@@ -1,0 +1,13 @@
+<form action="/auth/login" method="post" class="bg-body-tertiary p-4 rounded-4 shadow-sm">
+  <h2 class="h5 mb-3">Admin Access</h2>
+  <div class="mb-3">
+    <label for="username" class="form-label text-muted">Username</label>
+    <input type="text" class="form-control border-0" id="username" aria-describedby="username" name="username" required>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label text-muted">Password</label>
+    <input type="password" class="form-control border-0" id="password" name="password" required>
+  </div>
+  <button onclick="window.location = '/book'" type="button" class="btn btn-secondary">Cancel</button>
+  <button type="submit" class="btn btn-primary">Login</button>
+</form>

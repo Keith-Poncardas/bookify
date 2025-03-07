@@ -1,0 +1,11 @@
+<% layout('layout/main') %>
+
+<%- include('../partials/search') %>
+
+<% if (currentPage < 2) { %>
+<%- include('../partials/carousel') %>
+<% } %>
+
+<%- include('../partials/toolbar', { title: 'Listings', isDropdownHidden: false, BookGenres, SortOptions }) %>
+<%- include('../partials/cardContainer', { books, currentBookId: null }) %>
+<%- include('../partials/BottomPagination', { currentPage, totalPages }) %>

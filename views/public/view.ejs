@@ -1,0 +1,6 @@
+<% layout('layout/main') %>
+
+<%- include('../partials/toolbar', { title: 'View Listing', isDropdownHidden: true, BookGenres: [], SortOptions: [] }) %>
+<%- include('../partials/viewCard', { book }) %>
+<%- include('../partials/toolbar', { title: 'Similar Books', isDropdownHidden: true, BookGenres: [], SortOptions: [] }) %>
+<%- include('../partials/cardContainer', { books, currentBookId: book._id }) %>
