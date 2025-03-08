@@ -1,0 +1,83 @@
+<% layout('layout/main') %>
+
+<div class="modal fade bd-example-modal-lg" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookModalLabel">Add New Book</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/dashboard/upload" method="post" id="bookForm">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="author" class="form-label">Author(s)</label>
+            <input type="text" class="form-control" id="author" name="author" placeholder="Separate multiple authors with commas" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="rating" class="form-label">Rating (0-10)</label>
+            <input type="number" class="form-control" id="rating" name="rating" min="0" max="10" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="genre" class="form-label">Genre</label>
+            <select class="form-select" id="genre" name="genre" required>
+
+              <% BookGenres.forEach(genre => { %>
+              <option value="<%= genre %>"><%= genre %></option>
+              <% }) %>
+
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="city" name="city" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" class="form-control" id="country" name="country" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="yearPublished" class="form-label">Year Published</label>
+            <input type="number" class="form-control" id="yearPublished" name="yearPublished" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="languages" class="form-label">Languages</label>
+            <input type="text" class="form-control" id="languages" name="languages" placeholder="Separate multiple languages with commas" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="bookPage" class="form-label">Number of Pages</label>
+            <input type="number" class="form-control" id="bookPage" name="bookPage" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="buyLink" class="form-label">Buy Link</label>
+            <input type="url" class="form-control" id="buyLink" name="buyLink" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="posterImages" class="form-label">Poster Image URLs</label>
+            <input type="text" class="form-control" id="posterImages" name="posterImages" placeholder="Separate multiple URLs with commas" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

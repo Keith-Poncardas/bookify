@@ -1,8 +1,10 @@
 const logger = require('../console/logger');
 const Book = require('../models/bookSchema');
+const { separateByComma } = require('../utils/helpers');
 
 const uploadBook = async ({ book }) => {
-  return await Book.create(book);
+  const { author, languages, posterImages } = book;
+  return await Book.create({ ...book, author: separateByComma(author), languages: separateByComma(languages), posterImages: separateByComma(posterImages) });
 };
 
 const getBooks = async ({ query }) => {

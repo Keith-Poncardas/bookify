@@ -9,7 +9,7 @@ const getLogin = (req, res) => {
 
 const login = (req, res) => {
   const user = credAuth({ creds: req.body });
-  if (!user) return res.render('auth/login');
+  if (!user) return res.render('auth/login', { ...getNavbarConfig('login') });
 
   const token = generateToken({ user });
 
