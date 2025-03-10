@@ -1,0 +1,3 @@
+<% layout('layout/main') %>
+
+<%- include('../partials/form', { BookGenres, formTitle: `Edit '${book.title}'`, formAction: `/dashboard/${book._id}/edit?_method=PUT`,  data: book }) %>

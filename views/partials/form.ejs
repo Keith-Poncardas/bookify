@@ -1,83 +1,165 @@
 <% layout('layout/main') %>
 
-<div class="modal fade bd-example-modal-lg" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="bookModalLabel">Add New Book</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="/dashboard/upload" method="post" id="bookForm">
-          <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" required>
-          </div>
+<% const { 
+  title,
+  author,  
+  rating, 
+  genre, 
+  city, 
+  country, 
+  yearPublished, 
+  languages, 
+  bookPage, 
+  description,
+  buyLink, 
+  posterImages,
+} = data; %>
 
-          <div class="mb-3">
-            <label for="author" class="form-label">Author(s)</label>
-            <input type="text" class="form-control" id="author" name="author" placeholder="Separate multiple authors with commas" required>
-          </div>
+<div class="py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card border-0 shadow-sm bg-body-tertiary rounded-4">
+        <div class="card-header text-white p-3 rounded-top-4">
+          <h3 class="card-title mb-0"><%= formTitle || 'Book Information' %></h3>
+        </div>
+        <div class="card-body p-4">
+          <form action="<%= formAction %>" method="post" id="bookForm" class="needs-validation" novalidate>
 
-          <div class="mb-3">
-            <label for="rating" class="form-label">Rating (0-10)</label>
-            <input type="number" class="form-control" id="rating" name="rating" min="0" max="10" required>
-          </div>
+            <!-- Basic Information -->
+            <h5 class="border-bottom pb-2 mb-4">Basic Information</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= title || '' %>" required>
+                <div class="invalid-feedback">Please enter a title</div>
+              </div>
 
-          <div class="mb-3">
-            <label for="genre" class="form-label">Genre</label>
-            <select class="form-select" id="genre" name="genre" required>
+              <div class="col-md-6">
+                <label for="author" class="form-label">Author(s)</label>
+                <input type="text" class="form-control" id="author" name="author" value="<%= author || '' %>" placeholder="Separate multiple authors with commas" required>
+                <div class="invalid-feedback">Please enter at least one author</div>
+              </div>
+            </div>
 
-              <% BookGenres.forEach(genre => { %>
-              <option value="<%= genre %>"><%= genre %></option>
-              <% }) %>
+            <div class="row g-3 mt-1">
+              <div class="col-md-4">
+                <label for="rating" class="form-label">Rating (0-10)</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="rating" name="rating" min="0" max="10" step="0.1" value="<%= rating || '' %>" required>
+                  <span class="input-group-text rounded-end-2"><i class="fa-solid fa-star"></i></span>
+                  <div class="invalid-feedback">Please enter a rating between 0 and 10</div>
+                </div>
+              </div>
 
-            </select>
-          </div>
+              <div class="col-md-4">
+                <label for="yearPublished" class="form-label">Year Published</label>
+                <input type="number" class="form-control" id="yearPublished" name="yearPublished" value="<%= yearPublished || '' %>" required>
+                <div class="invalid-feedback">Please enter the publication year</div>
+              </div>
 
-          <div class="mb-3">
-            <label for="city" class="form-label">City</label>
-            <input type="text" class="form-control" id="city" name="city" required>
-          </div>
+              <div class="col-md-4">
+                <label for="bookPage" class="form-label">Pages</label>
+                <input type="number" class="form-control" id="bookPage" name="bookPage" value="<%= bookPage || '' %>" required>
+                <div class="invalid-feedback">Please enter the number of pages</div>
+              </div>
+            </div>
 
-          <div class="mb-3">
-            <label for="country" class="form-label">Country</label>
-            <input type="text" class="form-control" id="country" name="country" required>
-          </div>
+            <!-- Category Information -->
+            <h5 class="border-bottom pb-2 mb-4 mt-4">Category Information</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="genre" class="form-label">Genre</label>
+                <select class="form-select" id="genre" name="genre" required>
+                  <option value="" disabled <%= !genre ? 'selected' : '' %>>Select a genre</option>
+                  <% BookGenres.forEach(bookGenre => { %>
+                  <option value="<%= bookGenre %>" <%= genre === bookGenre ? 'selected' : '' %>><%= bookGenre %></option>
+                  <% }) %>
+                </select>
+                <div class="invalid-feedback">Please select a genre</div>
+              </div>
 
-          <div class="mb-3">
-            <label for="yearPublished" class="form-label">Year Published</label>
-            <input type="number" class="form-control" id="yearPublished" name="yearPublished" required>
-          </div>
+              <div class="col-md-6">
+                <label for="languages" class="form-label">Languages</label>
+                <input type="text" class="form-control" id="languages" name="languages" placeholder="Separate multiple languages with commas" value="<%= languages || '' %>" required>
+                <div class="invalid-feedback">Please enter at least one language</div>
+              </div>
+            </div>
 
-          <div class="mb-3">
-            <label for="languages" class="form-label">Languages</label>
-            <input type="text" class="form-control" id="languages" name="languages" placeholder="Separate multiple languages with commas" required>
-          </div>
+            <!-- Location Information -->
+            <h5 class="border-bottom pb-2 mb-4 mt-4">Location Information</h5>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="city" value="<%= city || '' %>" required>
+                <div class="invalid-feedback">Please enter a city</div>
+              </div>
 
-          <div class="mb-3">
-            <label for="bookPage" class="form-label">Number of Pages</label>
-            <input type="number" class="form-control" id="bookPage" name="bookPage" required>
-          </div>
+              <div class="col-md-6">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="country" name="country" value="<%= country || '' %>" required>
+                <div class="invalid-feedback">Please enter a country</div>
+              </div>
+            </div>
 
-          <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-          </div>
+            <!-- Additional Information -->
+            <h5 class="border-bottom pb-2 mb-4 mt-4">Additional Information</h5>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" id="description" name="description" rows="4" required><%= description || '' %></textarea>
+              <div class="invalid-feedback">Please enter a description</div>
+            </div>
 
-          <div class="mb-3">
-            <label for="buyLink" class="form-label">Buy Link</label>
-            <input type="url" class="form-control" id="buyLink" name="buyLink" required>
-          </div>
+            <div class="mb-3">
+              <label for="buyLink" class="form-label">Buy Link</label>
+              <div class="input-group">
+                <span class="input-group-text rounded-start-3"><i class="fa-solid fa-link"></i></span>
+                <input type="url" class="form-control rounded-end-3" id="buyLink" name="buyLink" value="<%= buyLink || '' %>" required>
+                <div class="invalid-feedback">Please enter a valid URL</div>
+              </div>
+            </div>
 
-          <div class="mb-3">
-            <label for="posterImages" class="form-label">Poster Image URLs</label>
-            <input type="text" class="form-control" id="posterImages" name="posterImages" placeholder="Separate multiple URLs with commas" required>
-          </div>
+            <div class="mb-4">
+              <label for="posterImages" class="form-label">Poster Image URLs</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-image"></i></span>
+                <input type="text" class="form-control rounded-end-3" id="posterImages" name="posterImages" placeholder="Separate multiple URLs with commas" value="<%= posterImages || '' %>" required>
+                <div class="invalid-feedback">Please enter at least one image URL</div>
+              </div>
+              <div class="form-text">Enter URLs for book cover images, separated by commas</div>
+            </div>
 
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+            <!-- Submit Button -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+              <button type="reset" class="btn btn-outline-secondary me-md-2">Reset</button>
+              <button type="submit" class="btn btn-primary">Submit Book</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Bootstrap Form Validation Script -->
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function() {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
