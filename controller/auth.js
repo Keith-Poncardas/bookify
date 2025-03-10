@@ -1,4 +1,3 @@
-const logger = require("../console/logger");
 const { credAuth } = require("../utils/credValidator");
 const { getNavbarConfig } = require("../utils/navbarConfig");
 const { generateToken } = require("../utils/tokenGenerator");

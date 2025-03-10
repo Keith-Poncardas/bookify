@@ -20,8 +20,6 @@ const retrieveEditForm = async (req, res) => {
   const { id } = req.params;
   try {
     const book = await viewBook({ bookId: id });
-    logger.success(book.title);
-    console.log(book);
     res.render('private/edit', { book, ...getNavbarConfig('dashboard'), BookGenres });
   } catch (err) {
     logger.error(err.message);
@@ -30,8 +28,7 @@ const retrieveEditForm = async (req, res) => {
 
 const uploadNewBook = async (req, res) => {
   try {
-    const newBook = await uploadBook({ book: req.body });
-    logger.success(`Book uploaded: ${newBook}`);
+    await uploadBook({ book: req.body });
     res.redirect('/dashboard');
   } catch (err) {
     logger.error(`Error posting book: ${err.message}`);
@@ -40,8 +37,7 @@ const uploadNewBook = async (req, res) => {
 
 const updateBook = async (req, res) => {
   try {
-    const editedBook = await editBook({ bookId: req.params.id, bookData: req.body });
-    logger.success(`Book updated: ${editedBook}`);
+    await editBook({ bookId: req.params.id, bookData: req.body });
     res.redirect('/dashboard');
   } catch (err) {
     logger.error(`Error edit this book: ${err.message}`);
@@ -50,8 +46,7 @@ const updateBook = async (req, res) => {
 
 const removeBook = async (req, res) => {
   try {
-    const deletedBook = await deleteBook({ bookId: req.params.id });
-    logger.success(deletedBook);
+    await deleteBook({ bookId: req.params.id });
     res.redirect('/dashboard');
   } catch (err) {
     logger.error(err);
