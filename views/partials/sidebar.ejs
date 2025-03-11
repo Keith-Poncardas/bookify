@@ -1,26 +1,43 @@
-<% layout('layout/main') %>
+<% const links = [
+{
+  title: 'Home',
+  icon: 'fa-home',
+  dir: '/dashboard'
+},
+{
+  title: 'Books',
+  icon: 'fa-book',
+  dir: '/dashboard/books'
+},
+{
+  title: 'Carousel',
+  icon: 'fa-images',
+  dir: '/dashboard/carousel'
+}
+] %>
 
 <aside class="col-md-2 bg-body-tertiary d-none d-md-block rounded-3 shadow-sm py-4 px-3">
 
-  <div class="mb-4">
-    <h1 class="h5 fw-bold">Admin</h1>
-  </div>
+  <div class="d-flex flex-column flex-shrink-0 text-white" style="height: 75vh;">
+    <a href="/dashboard" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <i class="fa-solid fa-user-tie me-3 fs-4"></i>
+      <span class="fs-4">Admin</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto gap-2">
 
-  <nav>
-    <ul class="list-group list-unstyled gap-2">
-      <li class="list-group-item bg-transparent px-3 py-2 border-0 text-secondary fw-medium rounded-2 
-      transition-all hover-bg-light hover-text-dark" style="cursor: pointer;">
-        <i class="fa-solid fa-book me-1"></i> Books
+      <% links.forEach(link => { %>
+      <li class="nav-item">
+        <a href="<%= link.dir %>" class="nav-link py-3 <%= link.dir === path ? 'active shadow-sm' : 'text-white'%> " aria-current="page">
+          <i class="fas <%= link.icon %> me-2"></i>
+          <%= link.title %>
+        </a>
       </li>
-      <li class="list-group-item bg-transparent px-3 py-2 border-0 text-secondary fw-medium rounded-2 
-                 transition-all hover-bg-light hover-text-dark" style="cursor: pointer;">
-        <i class="fa-solid fa-images me-1"></i> Carousel
-      </li>
-      <li class="list-group-item bg-transparent px-3 py-2 border-0 text-secondary fw-medium rounded-2 
-      transition-all hover-bg-light hover-text-dark">
-        <button class="btn btn-danger btn-sm shadow-sm" onclick="window.location = '/dashboard/logout'"><i class="fa-solid fa-power-off" style="margin-right: 5px;"></i> Logout</button>
-      </li>
+      <% }) %>
+
     </ul>
-  </nav>
+
+    <button onclick="window.location = '/dashboard/logout'" class="btn btn-danger shadow-sm mt-auto">Logout</button>
+  </div>
 
 </aside>

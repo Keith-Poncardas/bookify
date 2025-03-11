@@ -1,8 +1,6 @@
-<% layout('layout/main') %>
-
 <div class="d-flex flex-wrap justify-content-between align-items-center my-3 gap-2">
 
-  <form action="/dashboard" method="get" class="d-flex w-auto w-md-auto input-group-sm">
+  <form action="/dashboard/books" method="get" class="d-flex w-auto w-md-auto input-group-sm">
     <input type="text" class="form-control border-0 flex-grow-1 rounded-3" id="exampleFormControlInput1" placeholder="Search Items" name="search" autocomplete="off" required>
     <button class="btn btn-secondary btn-sm border-0 mx-1 rounded-3"><i class="fa-solid fa-magnifying-glass"></i></button>
   </form>
@@ -17,7 +15,7 @@
       <ul class="dropdown-menu">
 
         <% BookGenres.forEach(genre => { %>
-        <li><a class="dropdown-item" href="/dashboard?filterBy=<%= genre %>"><%= genre %></a></li>
+        <li><a class="dropdown-item" href="/dashboard/books?filterBy=<%= genre %>"><%= genre %></a></li>
         <% }) %>
 
       </ul>

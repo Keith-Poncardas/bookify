@@ -1,0 +1,6 @@
+<% layout('layout/privateLayout') %>
+
+<%- include('../partials/toolbar', { title: 'Books', isDropdownHidden: true, BookGenres: [], SortOptions: [] }) %>
+<%- include('../partials/dashboardToolbar', { BookGenres }) %>
+<%- include('../partials/dataTable', { books }) %>
+<%- include('../partials/bottomPagination', { currentPage, totalPages, path: 'dashboard/books' }) %>
