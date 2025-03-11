@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const authenticate = (req, res, next) => {
   const { token } = req.cookies;
-  if (!token) return res.redirect('auth/login');
+  if (!token) return res.redirect('/auth/login');
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -10,7 +10,7 @@ const authenticate = (req, res, next) => {
     next();
   } catch (err) {
     res.clearCookie('token');
-    return res.redirect('auth/login');
+    return res.redirect('/auth/login');
   };
 };
 

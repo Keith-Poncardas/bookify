@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const logger = require('../console/logger');
+const { BookifyError } = require('../utils/errorHandler');
 
 /**
  * Asynchronously connects to the MongoDB database using the connection string
@@ -16,6 +17,7 @@ const connectDB = async () => {
     logger.success(`Database connected successfuly: ${conn.connection.host}`);
   } catch (err) {
     logger.error(`Error connecting to database: ${err.message}`);
+    throw new BookifyError(err.message);
   }
 }
 
