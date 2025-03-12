@@ -45,7 +45,7 @@ const uploadBook = async ({ book }) => {
  */
 const getBooks = async ({ query }) => {
   try {
-    const { search, bookGenre, filterBy, sortBy, page = 1 } = query || {};
+    const { search, bookGenre, filterBy, sortBy, page = 1, distinctItem } = query || {};
     const limit = 10;
     const currentPage = parseInt(page);
 
@@ -86,6 +86,22 @@ const getBooks = async ({ query }) => {
       }
     };
 
+    // If `distinctItem` is provided, return unique genres instead of books
+    if (distinctItem === "genre") {
+      const genresWithCounts = await Book.aggregate([
+        {
+          $group: {
+            _id: "$genre",
+            count: { $sum: 1 }
+          }
+        },
+        {
+          $sort: { count: -1 }
+        }
+      ]); // Get unique genres from books
+      return { genres: genresWithCounts };
+    }
+
     // Fetch total document count for pagination
     const totalDocuments = await Book.countDocuments();
     const totalPages = Math.ceil(totalDocuments / limit);
@@ -96,7 +112,7 @@ const getBooks = async ({ query }) => {
       .limit(limit)
       .sort(filterSort);
 
-    return { books, currentPage, totalPages };
+    return { books, currentPage, totalPages, totalDocuments };
   } catch (err) {
     logger.error(`Error fetching books: ${err.message}`);
   }

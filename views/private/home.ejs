@@ -1,3 +1,6 @@
 <% layout('layout/privateLayout') %>
 
 <%- include('../partials/toolbar', { title: 'Home', isDropdownHidden: true, BookGenres: [], SortOptions: [] }) %>
+<%- include('../partials/statCard', { title: 'Total Books', totalDocs, useSmall: false, customSizeSmall: '', customSizeh5: 'h1', customSizeh6: 'h5' }) %>
+<%- include('../partials/toolbar', { title: 'Statistics', isDropdownHidden: true, BookGenres: [], SortOptions: [] }) %>
+<%- include('../partials/rowStats', { genres }) %>

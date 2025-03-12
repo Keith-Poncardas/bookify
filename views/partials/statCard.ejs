@@ -1,0 +1,12 @@
+<div class="card shadow-sm">
+  <div class="card-body text-center">
+    <h5 class="card-title fw-bold text-warning <%= customSizeh5 || 'h1' %>"><%= totalDocs %></h5>
+
+    <% if (useSmall) { %>
+    <small class="card-subtitle mb-2 text-muted <%= customSizeSmall || 'h6' %>"><%= title %></small>
+    <% } else { %>
+    <h6 class="card-subtitle mb-2 text-muted <%= customSizeh6 || 'h5' %>"><%= title %></h6>
+    <% } %>
+
+  </div>
+</div>

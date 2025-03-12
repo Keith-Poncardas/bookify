@@ -1,0 +1,11 @@
+<div class="row mt-3">
+
+  <% genres.forEach((genre) => { %>
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+
+    <%- include('../partials/statCard', { title: genre._id, totalDocs: genre.count, useSmall: true, customSizeh5: 'h2', customSizeSmall: '', customSizeh6: '' }) %>
+
+  </div>
+  <% }) %>
+
+</div>

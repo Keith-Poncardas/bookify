@@ -12,8 +12,14 @@ const { getNavbarConfig } = require("../utils/navbarConfig");
  * @param {Object} res - Express response object.
  * @returns {void} Renders the home dashboard page with navigation configuration and request path.
  */
-const retrieveHomeDashboard = (req, res) => {
-  res.render('private/home', { path: req.originalUrl, ...getNavbarConfig('dashboard') });
+const retrieveHomeDashboard = async (req, res) => {
+  try {
+    const { genres } = await getBooks({ query: { distinctItem: 'genre' } });
+    const { totalDocuments } = await getBooks({});
+    res.render('private/home', { path: req.path, ...getNavbarConfig('dashboard'), totalDocs: totalDocuments, genres: genres || [] });
+  } catch (err) {
+    logger.error(err.message);
+  }
 };
 
 /**
@@ -26,7 +32,7 @@ const retrieveHomeDashboard = (req, res) => {
  * @returns {void} Renders the carousel page with navigation configuration and request path.
  */
 const retrieveCarousel = (req, res) => {
-  res.render('private/carousel', { ...getNavbarConfig('dashboard'), path: req.originalUrl });
+  res.render('private/carousel', { ...getNavbarConfig('dashboard'), path: req.path });
 }
 
 /**
@@ -44,7 +50,7 @@ const retrieveCarousel = (req, res) => {
 const retrieveBooks = async (req, res) => {
   try {
     const books = await getBooks({ query: req.query });
-    res.render('private/books', { ...books, BookGenres, ...getNavbarConfig('dashboard'), path: req.originalUrl });
+    res.render('private/books', { ...books, BookGenres, ...getNavbarConfig('dashboard'), path: req.path });
   } catch (err) {
     logger.error(err.message);
   }

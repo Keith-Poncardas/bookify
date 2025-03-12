@@ -1,6 +1,6 @@
 <% layout('layout/main') %>
 
-<div class="row gap-2 my-3 mx-1">
+<div class="row gap-2 my-3" style="height: 90vh;">
 
   <%- include('../partials/sidebar', { path }) %>
 
@@ -9,5 +9,7 @@
     <%- body %>
 
   </div>
+
+  <%- include('../partials/offCanvas', { path }) %>
 
 </div>

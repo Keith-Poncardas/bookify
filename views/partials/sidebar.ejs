@@ -1,43 +1,9 @@
-<% const links = [
-{
-  title: 'Home',
-  icon: 'fa-home',
-  dir: '/dashboard'
-},
-{
-  title: 'Books',
-  icon: 'fa-book',
-  dir: '/dashboard/books'
-},
-{
-  title: 'Carousel',
-  icon: 'fa-images',
-  dir: '/dashboard/carousel'
-}
-] %>
+<aside class="col-md-3 bg-body-tertiary d-none d-lg-block rounded-3 shadow-sm py-4 px-3">
 
-<aside class="col-md-2 bg-body-tertiary d-none d-md-block rounded-3 shadow-sm py-4 px-3">
+  <div class="d-flex flex-column flex-shrink-0 text-white" style="height: 100%;">
 
-  <div class="d-flex flex-column flex-shrink-0 text-white" style="height: 75vh;">
-    <a href="/dashboard" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <i class="fa-solid fa-user-tie me-3 fs-4"></i>
-      <span class="fs-4">Admin</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto gap-2">
+    <%- include('sidebarContents', { path }) %>
 
-      <% links.forEach(link => { %>
-      <li class="nav-item">
-        <a href="<%= link.dir %>" class="nav-link py-3 <%= link.dir === path ? 'active shadow-sm' : 'text-white'%> " aria-current="page">
-          <i class="fas <%= link.icon %> me-2"></i>
-          <%= link.title %>
-        </a>
-      </li>
-      <% }) %>
-
-    </ul>
-
-    <button onclick="window.location = '/dashboard/logout'" class="btn btn-danger shadow-sm mt-auto">Logout</button>
   </div>
 
 </aside>

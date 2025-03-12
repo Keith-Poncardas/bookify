@@ -40,6 +40,20 @@ const catchAsync = (fn) => {
 };
 
 /**
+ * Middleware function to handle 404 Page Not Found errors.
+ *
+ * This function creates a new `BookifyError` with a message of 'Not found' and a status code of 404,
+ * then passes it to the next middleware in the stack.
+ *
+ * @param {Object} req - The Express request object.
+ * @param {Object} res - The Express response object.
+ * @param {Function} next - The next middleware function in the stack.
+ */
+const pageNotFound = (req, res, next) => {
+  next(new BookifyError('Not found', 404));
+};
+
+/**
  * Global error-handling middleware for Express.
  * 
  * This middleware catches errors thrown in the application and sends an appropriate response
@@ -58,4 +72,4 @@ const errorHandler = (err, req, res, next) => {
   res.render('error/centralizedError', { statusCode, message, ...getNavbarConfig('home') });
 };
 
-module.exports = { BookifyError, catchAsync, errorHandler };
+module.exports = { BookifyError, catchAsync, errorHandler, pageNotFound };

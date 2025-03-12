@@ -16,7 +16,7 @@ const { retrieveBooks } = require('./controller/public');
 
 const cookieParser = require('cookie-parser');
 const authenticate = require('./middleware/authenticator');
-const { errorHandler, BookifyError, catchAsync } = require('./utils/errorHandler');
+const { errorHandler, catchAsync, pageNotFound } = require('./utils/errorHandler');
 
 
 const app = express();
@@ -52,7 +52,7 @@ app.use('/book', publicRoutes);
 app.use('/auth', authRoutes);
 app.use('/dashboard', authenticate, privateRoutes);
 
-app.use((req, res, next) => next(new BookifyError('Not found', 404)));
+app.use(pageNotFound);
 app.use(errorHandler);
 
 catchAsync(connectDB());
