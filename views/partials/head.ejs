@@ -1,0 +1,53 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title><%= book.title %> by <%= book.author.join(", ") %> | <%= book.genre %> (<%= book.yearPublished %>)</title>
+
+  <meta name="description" content="<%= book.description.substring(0, 160) %> Buy now at <%= book.buyLink %>.">
+  <meta name="keywords" content="<%= book.title %>, <%= book.author.join(', ') %>, <%= book.genre %>, <%= book.yearPublished %>, <%= book.city %>, <%= book.country %>, book reviews, best books">
+  <meta name="author" content="<%= book.author.join(', ') %>">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="<%= book.title %> by <%= book.author.join(', ') %>">
+  <meta property="og:description" content="<%= book.description %>">
+  <meta property="og:image" content="<%= book.posterImages[0] %>">
+  <meta property="og:url" content="<%= request.url %>">
+  <meta property="og:type" content="book">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= book.title %> by <%= book.author.join(', ') %>">
+  <meta name="twitter:description" content="<%= book.description %>">
+  <meta name="twitter:image" content="<%= book.posterImages[0] %>">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="<%= request.url %>">
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Book",
+      "name": "<%= book.title %>",
+      "author": [<%= book.author.map(author => `{"@type": "Person", "name": "${author}"}`).join(",") %>],
+      "genre": "<%= book.genre %>",
+      "datePublished": "<%= book.yearPublished %>",
+      "inLanguage": "<%= book.languages.join(', ') %>",
+      "numberOfPages": "<%= book.bookPage %>",
+      "description": "<%= book.description %>",
+      "image": "<%= book.posterImages[0] %>",
+      "offers": {
+        "@type": "Offer",
+        "url": "<%= book.buyLink %>",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="/public/css/style.css">
+  <link rel="stylesheet" href="/public/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>

@@ -140,7 +140,18 @@ const viewBook = async ({ bookId }) => {
  * @returns {Promise<Object|null>} - The updated book document if found, otherwise `null`.
  */
 const editBook = async ({ bookId, bookData }) => {
-  return await Book.findByIdAndUpdate(bookId, bookData, { new: true });
+
+  const { author, languages, posterImages } = bookData;
+
+  return await Book.findByIdAndUpdate(
+    bookId,
+    {
+      ...bookData,
+      author: separateByComma(author),
+      languages: separateByComma(languages),
+      posterImages: separateByComma(posterImages)
+    },
+    { new: true });
 };
 
 /**

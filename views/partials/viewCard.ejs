@@ -40,7 +40,7 @@
       <!-- Title / Subtitle -->
       <div class="text-center text-md-start text-lg-start">
         <h1 class="card-title h2"><%= book.title %></h1>
-        <h6 class="card-subtitle mb-2 text-muted">Author <%= book.author %></h6>
+        <h6 class="card-subtitle mb-2 text-muted">Author <%= book.author.join(', ') %></h6>
       </div>
 
       <!-- Rating -->
@@ -74,7 +74,7 @@
         <!-- Language -->
         <div>
           <p class="h6 m-0"><i class="fa-solid fa-globe me-1"></i> Language</p>
-          <p class="text-muted small"><%= book.languages %></p>
+          <p class="text-muted small"><%= book.languages.join(', ') %></p>
         </div>
 
         <!-- Pages -->

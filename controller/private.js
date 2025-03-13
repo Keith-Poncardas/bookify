@@ -16,7 +16,13 @@ const retrieveHomeDashboard = async (req, res) => {
   try {
     const { genres } = await getBooks({ query: { distinctItem: 'genre' } });
     const { totalDocuments } = await getBooks({});
-    res.render('private/home', { path: req.path, ...getNavbarConfig('dashboard'), totalDocs: totalDocuments, genres: genres || [] });
+
+    res.render('private/home', {
+      path: req.path,
+      ...getNavbarConfig('dashboard'),
+      totalDocs: totalDocuments,
+      genres: genres || [],
+    });
   } catch (err) {
     logger.error(err.message);
   }
@@ -32,7 +38,10 @@ const retrieveHomeDashboard = async (req, res) => {
  * @returns {void} Renders the carousel page with navigation configuration and request path.
  */
 const retrieveCarousel = (req, res) => {
-  res.render('private/carousel', { ...getNavbarConfig('dashboard'), path: req.path });
+  res.render('private/carousel', {
+    ...getNavbarConfig('dashboard'),
+    path: req.path,
+  });
 }
 
 /**
@@ -50,7 +59,13 @@ const retrieveCarousel = (req, res) => {
 const retrieveBooks = async (req, res) => {
   try {
     const books = await getBooks({ query: req.query });
-    res.render('private/books', { ...books, BookGenres, ...getNavbarConfig('dashboard'), path: req.path });
+
+    res.render('private/books', {
+      ...books,
+      BookGenres,
+      ...getNavbarConfig('dashboard'),
+      path: req.path,
+    });
   } catch (err) {
     logger.error(err.message);
   }
@@ -66,7 +81,11 @@ const retrieveBooks = async (req, res) => {
  * @returns {Promise<void>} Renders the upload form with necessary configurations.
  */
 const retrieveUploadForm = async (req, res) => {
-  res.render('private/upload', { ...getNavbarConfig('dashboard'), BookGenres });
+
+  res.render('private/upload', {
+    ...getNavbarConfig('dashboard'),
+    BookGenres,
+  });
 };
 
 /**
@@ -85,7 +104,12 @@ const retrieveEditForm = async (req, res) => {
   const { id } = req.params;
   try {
     const book = await viewBook({ bookId: id });
-    res.render('private/edit', { book, ...getNavbarConfig('dashboard'), BookGenres });
+
+    res.render('private/edit', {
+      book,
+      ...getNavbarConfig('dashboard'),
+      BookGenres,
+    });
   } catch (err) {
     logger.error(err.message);
   }
