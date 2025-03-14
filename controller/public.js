@@ -2,7 +2,7 @@ const logger = require("../console/logger");
 const { BookGenres, SortOptions } = require('../utils/options');
 const { getBooks, viewBook } = require("../service/bookService");
 const { getNavbarConfig } = require('../utils/navbarConfig');
-const { headHelper } = require("../utils/helpers");
+const seo = require('express-seo')();
 
 /**
  * Asynchronously retrieves books based on the request query and renders the home page.
@@ -24,7 +24,8 @@ const retrieveBooks = async (req, res) => {
       ...getNavbarConfig('home'),
     });
   } catch (err) {
-    logger.error(`Error retrieving books: ${err.message}`);
+    logger.error(err.message);
+    throw new BookifyError('Failed to retrieve books.', 500);
   }
 };
 
@@ -49,7 +50,8 @@ const retrieveBook = async (req, res) => {
 
     res.render('public/view', { book, ...books, ...getNavbarConfig('view') });
   } catch (err) {
-    logger.error(`Error retrieving this book: ${err.message}`);
+    logger.error(err.message);
+    throw new BookifyError('Failed to retrieve book.', 500);
   }
 };
 

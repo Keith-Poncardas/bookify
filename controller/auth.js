@@ -9,8 +9,15 @@ const { generateToken } = require("../utils/tokenGenerator");
  * @param {Object} res - The response object.
  */
 const getLogin = (req, res) => {
-  res.render('auth/login', { ...getNavbarConfig('login') });
+  const isAuthFailed = String(req.query.authFailed) === 'true';
+
+  res.render('auth/login', {
+    ...getNavbarConfig('login'),
+    isAuthFailed,
+    errorMsg: isAuthFailed ? 'Invalid Credentials, Try Again.' : null
+  });
 };
+
 
 /**
  * Handles user login by authenticating credentials, generating a token, and setting a cookie.
@@ -23,7 +30,7 @@ const getLogin = (req, res) => {
  */
 const login = (req, res) => {
   const user = credAuth({ creds: req.body });
-  if (!user) return res.redirect('/auth/login');
+  if (!user) return res.redirect('/auth/login?authFailed=true');
 
   const token = generateToken({ user });
 

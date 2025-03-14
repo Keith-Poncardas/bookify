@@ -1,7 +1,8 @@
 const logger = require("../console/logger");
 const { BookGenres } = require('../utils/options');
-const { getBooks, uploadBook, editBook, viewBook, deleteBook } = require("../service/bookService");
+const { getBooks, uploadBook, editBook, viewBook, deleteBook, deleteSelected } = require("../service/bookService");
 const { getNavbarConfig } = require("../utils/navbarConfig");
+const { BookifyError } = require("../utils/errorHandler");
 
 /**
  * Renders the home dashboard page.
@@ -23,9 +24,11 @@ const retrieveHomeDashboard = async (req, res) => {
       totalDocs: totalDocuments,
       genres: genres || [],
     });
+
   } catch (err) {
     logger.error(err.message);
-  }
+    throw new BookifyError('Failed to retrieve home dashboard.', 500);
+  };
 };
 
 /**
@@ -42,7 +45,7 @@ const retrieveCarousel = (req, res) => {
     ...getNavbarConfig('dashboard'),
     path: req.path,
   });
-}
+};
 
 /**
  * Retrieves and displays a list of books based on the query parameters.
@@ -68,8 +71,9 @@ const retrieveBooks = async (req, res) => {
     });
   } catch (err) {
     logger.error(err.message);
-  }
-}
+    throw new BookifyError('Failed to retrieve dashboard books.', 500);
+  };
+};
 
 /**
  * Renders the upload form for adding a new book.
@@ -112,8 +116,9 @@ const retrieveEditForm = async (req, res) => {
     });
   } catch (err) {
     logger.error(err.message);
-  }
-}
+    throw new BookifyError('Failed to retrieve dashboard edit form.', 500);
+  };
+};
 
 /**
  * Uploads a new book to the system.
@@ -131,8 +136,9 @@ const uploadNewBook = async (req, res) => {
     await uploadBook({ book: req.body });
     res.redirect('/dashboard');
   } catch (err) {
-    logger.error(`Error posting book: ${err.message}`);
-  }
+    logger.error(err.message);
+    throw new BookifyError('Failed to upload the book.', 500);
+  };
 };
 
 /**
@@ -154,8 +160,9 @@ const updateBook = async (req, res) => {
     res.redirect('/dashboard');
   } catch (err) {
     logger.error(`Error edit this book: ${err.message}`);
-  }
-}
+    throw new BookifyError('Failed to edit the book.', 500);
+  };
+};
 
 /**
  * Handles the removal of a book from the system.
@@ -174,9 +181,36 @@ const removeBook = async (req, res) => {
     await deleteBook({ bookId: req.params.id });
     res.redirect('/dashboard');
   } catch (err) {
-    logger.error(err);
+    logger.error(err.message);
+    throw new BookifyError('Failed to remove the book.', 500);
+  };
+};
+
+/**
+ * Deletes multiple books based on the provided IDs in the request body.
+ * 
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response with success or error message
+ */
+const killSelected = async (req, res) => {
+  try {
+    if (!req.body.ids || req.body.ids.length === 0) {
+      return res.status(400).json({ error: 'No IDs provided' }); // 🚨 Error if no IDs are given
+    }
+
+    await deleteSelected({ bookIds: req.body.ids });
+
+    return res.json({ message: 'Books deleted successfully' }); // ✅ JSON response
+  } catch (err) {
+
+    console.error(err.message);
+    res.status(500).json({ error: 'Server error' });
+    throw new BookifyError('Failed to remove all selected items.', 500);
+
   }
-}
+};
+
 
 /**
  * Logs out the user by clearing the authentication token cookie and redirecting to the login page.
@@ -189,4 +223,4 @@ const logout = (req, res) => {
   res.redirect('/auth/login');
 };
 
-module.exports = { retrieveHomeDashboard, retrieveUploadForm, uploadNewBook, retrieveEditForm, updateBook, removeBook, retrieveBooks, retrieveCarousel, logout };
+module.exports = { retrieveHomeDashboard, retrieveUploadForm, uploadNewBook, retrieveEditForm, updateBook, removeBook, retrieveBooks, retrieveCarousel, killSelected, logout };

@@ -13,12 +13,16 @@ const { BookifyError } = require('../utils/errorHandler');
  */
 const connectDB = async () => {
   try {
+
     const conn = await mongoose.connect(process.env.MONGO_URL);
     logger.success(`Database connected successfuly: ${conn.connection.host}`);
+
   } catch (err) {
-    logger.error(`Error connecting to database: ${err.message}`);
-    throw new BookifyError(err.message);
-  }
-}
+
+    logger.error(`Error connecting to the database: ${err.message}`);
+    throw new BookifyError('Failed to connect to database.', 500);
+
+  };
+};
 
 module.exports = connectDB;

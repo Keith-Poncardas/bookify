@@ -1,5 +1,5 @@
 <tr>
-  <th scope="row"><%= index + 1 %></th>
+  <th scope="row"><input type="checkbox" class="select-item" data-id="<%= book._id %>"></th>
   <td scope="row" class="text-truncate" style="max-width: 6rem; cursor: default;" title="<%= book._id %>"><%= book._id %></td>
   <td class="text-truncate" style="max-width: 8rem; cursor: default;" title="<%= book.title %>"><%= book.title %></td>
   <td class="text-truncate" style="max-width: 8rem;"><%= book.genre %></td>
@@ -11,7 +11,7 @@
     <button class="btn btn-outline-secondary btn-sm me-1" onclick="window.location = '/dashboard/<%= book._id %>/edit'"><i class="fa-solid fa-pen-to-square me-1"></i></button>
 
     <form action="/dashboard/<%= book._id %>/delete?_method=DELETE" method="post" class="d-inline">
-      <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash me-1"></i></button>
+      <button type="submit" onclick="return confirm(`Are you sure you want to delete '<%= book.title %>'?`)" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-trash me-1"></i></button>
     </form>
 
   </td>

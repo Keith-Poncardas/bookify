@@ -1,3 +1,7 @@
+<% if (isAuthFailed) { %>
+<%- include('../partials/alertBox', { type: 'danger', message: errorMsg }) %>
+<% } %>
+
 <form action="/auth/login" method="post" class="bg-body-tertiary p-4 rounded-4 shadow-sm">
   <h2 class="h5 mb-3">Admin Access</h2>
   <div class="mb-3">

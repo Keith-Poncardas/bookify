@@ -167,4 +167,15 @@ const deleteBook = async ({ bookId }) => {
   return await Book.findByIdAndDelete(bookId);
 };
 
-module.exports = { uploadBook, getBooks, viewBook, editBook, deleteBook };
+/**
+ * Deletes multiple books from the database based on the provided book IDs.
+ *
+ * @param {Object} params - The parameters for the function.
+ * @param {Array<string>} params.bookIds - An array of book IDs to be deleted.
+ * @returns {Promise<Object>} A promise that resolves to the result of the delete operation.
+ */
+const deleteSelected = async ({ bookIds }) => {
+  return await Book.deleteMany({ _id: { $in: bookIds } });
+};
+
+module.exports = { uploadBook, getBooks, viewBook, editBook, deleteBook, deleteSelected };

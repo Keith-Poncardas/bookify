@@ -16,8 +16,7 @@ const { retrieveBooks } = require('./controller/public');
 
 const cookieParser = require('cookie-parser');
 const authenticate = require('./middleware/authenticator');
-const { errorHandler, catchAsync, pageNotFound } = require('./utils/errorHandler');
-
+const { errorHandler, pageNotFound } = require('./utils/errorHandler');
 
 const app = express();
 
@@ -37,12 +36,12 @@ app.use(
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.set('view engine', 'ejs');
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(cookieParser());
+app.use(express.json());
 
 app.engine('ejs', ejsMate);
 
@@ -55,5 +54,5 @@ app.use('/dashboard', authenticate, privateRoutes);
 app.use(pageNotFound);
 app.use(errorHandler);
 
-catchAsync(connectDB());
+connectDB();
 app.listen(PORT, () => logger.success(`Server is connected to http://localhost:${PORT}`));

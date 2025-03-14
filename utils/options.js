@@ -1,4 +1,5 @@
 const BookGenres = [
+  "History",
   "Fiction",
   "NonFiction",
   "Fantasy",
