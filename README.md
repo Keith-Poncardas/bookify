@@ -26,8 +26,10 @@ Create a `.env` file in the root directory and add the following:
 ```
 MONGO_URL=your_mongodb_connection_string
 PORT=your_preferred_port
+
 JWT_SECRET=your_jwt_secret
 JWT_EXPIRATION=your_jwt_expiration_time
+
 USN=your_dashboard_username
 PASS=your_dashboard_password
 ```
