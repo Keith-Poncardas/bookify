@@ -12,7 +12,7 @@ Bookify is a hobby project built using **Express.js**, **EJS**, and **MongoDB**.
 ## Installation
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/your-username/bookify.git
+   git clone https://github.com/Keith-Poncardas/bookify.git
    cd bookify
    ```
 2. **Install dependencies:**
