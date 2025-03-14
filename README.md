@@ -1,6 +1,6 @@
 # Bookify
 
-Bookify is a hobby project built using **Express.js**, **EJS**, and **MongoDB**. This app serves as a simple book management system built by Keith Poncardas.
+Bookify is a hobby project built using **Express.js**, **EJS**, and **MongoDB**. This app serves as a simple book management system built by **Keith Poncardas**.
 
 ## Features
 - Express.js for backend handling
