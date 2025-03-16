@@ -3,7 +3,7 @@
 <%- include('../partials/search') %>
 
 <% if (currentPage < 2) { %>
-<%- include('../partials/carousel') %>
+<%- include('../partials/carousel', { carousel: books.slice(0, 5) }) %>
 <% } %>
 
 <%- include('../partials/toolbar', { title: 'Listings', isDropdownHidden: false, BookGenres, SortOptions }) %>

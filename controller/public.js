@@ -47,7 +47,7 @@ const retrieveBook = async (req, res) => {
   try {
 
     const book = await viewBook({ bookId: id });
-    const books = await getBooks({ query: req.query });
+    const books = await getBooks({ query: { bookGenre: book.genre } });
 
     res.locals.seo.add(res, {
       title: `${book.title} - Bookify`,

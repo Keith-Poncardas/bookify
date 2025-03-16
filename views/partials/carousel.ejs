@@ -1,32 +1,17 @@
 <div id="carouselExampleCaptions" class="carousel slide my-3 carousel-fade" data-bs-ride="carousel">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
   <div class="carousel-inner rounded-4 shadow-sm">
-    <div class="carousel-item active">
-      <img src="https://upload.wikimedia.org/wikipedia/en/4/4a/Oppenheimer_%28film%29.jpg" style="filter: blur(5px) brightness(50%);" class="d-block w-100" alt="...">
-      <div class="carousel-caption ">
-        <h5 class="text-white">First slide label</h5>
-        <p class="text-muted">Some representative placeholder content for the first slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="https://upload.wikimedia.org/wikipedia/en/5/52/Dune_Part_Two_poster.jpeg" style="filter: blur(5px) brightness(50%);" class="d-block w-100" alt="...">
 
-      <div class="carousel-caption ">
-        <h5 class="text-white">Second slide label</h5>
-        <p class="text-muted">Some representative placeholder content for the first slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="https://m.media-amazon.com/images/M/MV5BZTFlZTIxMzYtZTU4Ny00YjZiLTg0OGMtOTFmNmI1ZDVmODQ3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" class="d-block w-100" style="filter: blur(5px) brightness(50%);" alt="...">
+    <% carousel.forEach((item, index) => { %>
+    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+      <img src="<%= item.posterImages[0] %>" style="filter: blur(5px) brightness(50%);" class="d-block w-100" alt="...">
       <div class="carousel-caption">
-        <h5 class="text-white">Third slide label</h5>
-        <p class="text-muted">Some representative placeholder content for the first slide.</p>
+        <h5 class="text-white"><%= item.title %></h5>
+        <p class="text-muted"><%= item.description %></p>
+        <a href="/book/<%= item._id %>/view" class="btn btn-outline-info btn-sm">Buy '<strong><%= item.title %></strong>'</a>
       </div>
     </div>
+    <% }) %>
+
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
