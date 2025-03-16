@@ -45,8 +45,18 @@ const retrieveBooks = async (req, res) => {
 const retrieveBook = async (req, res) => {
   const { id } = req.params;
   try {
+
     const book = await viewBook({ bookId: id });
     const books = await getBooks({ query: req.query });
+
+    res.locals.seo.add(res, {
+      title: `${book.title} - Bookify`,
+      description: book.description || "Read this amazing book on Bookify!",
+      keywords: `${book.genre}, ${book.author}, books, reading`,
+      image: book.posterImages[0] || "https://i.ibb.co/7dDktDc5/bookifyph-vercel-app.png",
+      url: `https://bookifyph.vercel.app/book/${id}/view?bookGenre=${book.genre}`,
+      twitterCard: book.posterImages[0] || "https://i.ibb.co/7dDktDc5/bookifyph-vercel-app.png"
+    });
 
     res.render('public/view', { book, ...books, ...getNavbarConfig('view') });
   } catch (err) {

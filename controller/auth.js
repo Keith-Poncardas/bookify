@@ -8,8 +8,10 @@ const { generateToken } = require("../utils/tokenGenerator");
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.
  */
-const getLogin = (req, res) => {
+const getLogin = (req, res, next) => {
   const isAuthFailed = String(req.query.authFailed) === 'true';
+
+  res.locals.seo.add(res, { title: "Login - Bookify" });
 
   res.render('auth/login', {
     ...getNavbarConfig('login'),
@@ -17,7 +19,6 @@ const getLogin = (req, res) => {
     errorMsg: isAuthFailed ? 'Invalid Credentials, Try Again.' : null
   });
 };
-
 
 /**
  * Handles user login by authenticating credentials, generating a token, and setting a cookie.

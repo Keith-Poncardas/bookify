@@ -17,6 +17,7 @@ const { retrieveBooks } = require('./controller/public');
 const cookieParser = require('cookie-parser');
 const authenticate = require('./middleware/authenticator');
 const { errorHandler, pageNotFound } = require('./utils/errorHandler');
+const seo = require('./utils/seoBuilder');
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.use(
     },
   })
 );
+
+app.use(seo.middleware());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

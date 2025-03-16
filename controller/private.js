@@ -18,6 +18,8 @@ const retrieveHomeDashboard = async (req, res) => {
     const { genres } = await getBooks({ query: { distinctItem: 'genre' } });
     const { totalDocuments } = await getBooks({});
 
+    res.locals.seo.add(res, { title: "Dashboard - Home" });
+
     res.render('private/home', {
       path: req.path,
       ...getNavbarConfig('dashboard'),
@@ -26,8 +28,10 @@ const retrieveHomeDashboard = async (req, res) => {
     });
 
   } catch (err) {
+
     logger.error(err.message);
     throw new BookifyError('Failed to retrieve home dashboard.', 500);
+
   };
 };
 
@@ -41,10 +45,14 @@ const retrieveHomeDashboard = async (req, res) => {
  * @returns {void} Renders the carousel page with navigation configuration and request path.
  */
 const retrieveCarousel = (req, res) => {
+
+  res.locals.seo.add(res, { title: "Dashboard - Carousel" });
+
   res.render('private/carousel', {
     ...getNavbarConfig('dashboard'),
     path: req.path,
   });
+
 };
 
 /**
@@ -63,15 +71,20 @@ const retrieveBooks = async (req, res) => {
   try {
     const books = await getBooks({ query: req.query });
 
+    res.locals.seo.add(res, { title: "Dashboard - Books" });
+
     res.render('private/books', {
       ...books,
       BookGenres,
       ...getNavbarConfig('dashboard'),
       path: req.path,
     });
+
   } catch (err) {
+
     logger.error(err.message);
     throw new BookifyError('Failed to retrieve dashboard books.', 500);
+
   };
 };
 
@@ -86,10 +99,13 @@ const retrieveBooks = async (req, res) => {
  */
 const retrieveUploadForm = async (req, res) => {
 
+  res.locals.seo.add(res, { title: "Upload Book" });
+
   res.render('private/upload', {
     ...getNavbarConfig('dashboard'),
     BookGenres,
   });
+
 };
 
 /**
@@ -106,18 +122,25 @@ const retrieveUploadForm = async (req, res) => {
  */
 const retrieveEditForm = async (req, res) => {
   const { id } = req.params;
+
   try {
     const book = await viewBook({ bookId: id });
+
+    res.locals.seo.add(res, { title: `Edit - ${book.title}` });
 
     res.render('private/edit', {
       book,
       ...getNavbarConfig('dashboard'),
       BookGenres,
     });
+
   } catch (err) {
+
     logger.error(err.message);
     throw new BookifyError('Failed to retrieve dashboard edit form.', 500);
+
   };
+
 };
 
 /**
@@ -132,13 +155,18 @@ const retrieveEditForm = async (req, res) => {
  * @throws Logs an error if the upload fails.
  */
 const uploadNewBook = async (req, res) => {
+
   try {
+
     await uploadBook({ book: req.body });
     res.redirect('/dashboard');
+
   } catch (err) {
+
     logger.error(err.message);
     throw new BookifyError('Failed to upload the book.', 500);
   };
+
 };
 
 /**
@@ -155,12 +183,17 @@ const uploadNewBook = async (req, res) => {
  * @throws Logs an error if the update fails.
  */
 const updateBook = async (req, res) => {
+
   try {
+
     await editBook({ bookId: req.params.id, bookData: req.body });
     res.redirect('/dashboard');
+
   } catch (err) {
+
     logger.error(`Error edit this book: ${err.message}`);
     throw new BookifyError('Failed to edit the book.', 500);
+
   };
 };
 
@@ -178,11 +211,15 @@ const updateBook = async (req, res) => {
  */
 const removeBook = async (req, res) => {
   try {
+
     await deleteBook({ bookId: req.params.id });
     res.redirect('/dashboard');
+
   } catch (err) {
+
     logger.error(err.message);
     throw new BookifyError('Failed to remove the book.', 500);
+
   };
 };
 
@@ -195,6 +232,7 @@ const removeBook = async (req, res) => {
  */
 const killSelected = async (req, res) => {
   try {
+
     if (!req.body.ids || req.body.ids.length === 0) {
       return res.status(400).json({ error: 'No IDs provided' }); // 🚨 Error if no IDs are given
     }
