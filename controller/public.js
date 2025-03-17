@@ -50,7 +50,7 @@ const retrieveBook = async (req, res) => {
     const books = await getBooks({ query: { bookGenre: book.genre } });
 
     res.locals.seo.add(res, {
-      title: `${book.title} - Bookify`,
+      title: `${book.title} - ${book.author}`,
       description: book.description || "Read this amazing book on Bookify!",
       keywords: `${book.genre}, ${book.author}, books, reading`,
       image: book.posterImages[0] || "https://i.ibb.co/7dDktDc5/bookifyph-vercel-app.png",
